@@ -68,15 +68,21 @@ class Idle:
 
 
     def do(self):
-        self.boy.frame = (self.boy.frame + FRAMES_PER_SEC * game_framework.frame_time) % 8
-        if get_time() - self.boy.wait_time > 3:
-            self.boy.state_machine.handle_state_event(('TIMEOUT', None))
+        if int(self.boy.frame) == 4:
+            if self.boy.image_y > 0:
+                self.boy.image_y -= 1
+                self.boy.frame = 0
+            else:
+                self.boy.image_y = 2
+                self.boy.frame = 0
+        self.boy.frame = (self.boy.frame + FRAMES_PER_SEC * game_framework.frame_time) % 5
+        self.boy.x += self.boy.dir * RUN_SPEED_PPS * game_framework.frame_time
 
     def draw(self):
         if self.boy.face_dir == 1: # right
-            self.boy.image.clip_draw(int(self.boy.frame) * 100, 300, 100, 100, self.boy.x, self.boy.y)
+            self.boy.image.clip_draw(int(self.boy.frame) * 181, 167 * self.boy.image_y, 181, 167, self.boy.x, self.boy.y)
         else: # face_dir == -1: # left
-            self.boy.image.clip_draw(int(self.boy.frame) * 100, 200, 100, 100, self.boy.x, self.boy.y)
+            self.boy.image.clip_composite_draw(int(self.boy.frame) * 181, 167 * self.boy.image_y, 181, 167, 0.0, 'h', self.boy.x, self.boy.y, 181, 160)
 
 
 class Sleep:
