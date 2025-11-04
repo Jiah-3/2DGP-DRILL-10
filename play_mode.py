@@ -29,8 +29,10 @@ def init():
     grass = Grass()
     game_world.add_object(grass, 0)
 
-    boy = Boy()
-    game_world.add_object(boy, 1)
+    for i in range(10):
+        boy = Boy()
+        boy.y = 90 + i * 50
+        game_world.add_object(boy, 1)
 
 def update():
     game_world.update()
