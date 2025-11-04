@@ -1,3 +1,5 @@
+import math
+
 from pico2d import load_image, get_time, load_font
 from sdl2 import SDL_KEYDOWN, SDLK_SPACE, SDLK_RIGHT, SDL_KEYUP, SDLK_LEFT
 
@@ -118,14 +120,21 @@ class Run:
             self.boy.fire_ball()
 
     def do(self):
-        self.boy.frame = (self.boy.frame + FRAMES_PER_SEC * game_framework.frame_time) % 8
+        if int(self.boy.frame) == 4:
+            if self.boy.image_y > 0:
+                self.boy.image_y -= 1
+                self.boy.frame = 0
+            else:
+                self.boy.image_y = 2
+                self.boy.frame = 0
+        self.boy.frame = (self.boy.frame + FRAMES_PER_SEC * game_framework.frame_time) % 5
         self.boy.x += self.boy.dir * RUN_SPEED_PPS * game_framework.frame_time
 
     def draw(self):
         if self.boy.face_dir == 1: # right
-            self.boy.image.clip_draw(int(self.boy.frame) * 100, 100, 100, 100, self.boy.x, self.boy.y)
+            self.boy.image.clip_draw(int(self.boy.frame) * 181, 167 * self.boy.image_y, 181, 167, self.boy.x, self.boy.y)
         else: # face_dir == -1: # left
-            self.boy.image.clip_draw(int(self.boy.frame) * 100, 0, 100, 100, self.boy.x, self.boy.y)
+            self.boy.image.clip_composite_draw(int(self.boy.frame) * 181, 167 * self.boy.image_y, 181, 167, 0.0, 'h', self.boy.x, self.boy.y, 181, 160)
 
 
 
@@ -145,6 +154,7 @@ class Boy:
         self.face_dir = 1
         self.dir = 0
         self.image = load_image('bird_animation.png')
+        self.image_y = 2
 
         self.IDLE = Idle(self)
         self.SLEEP = Sleep(self)
@@ -152,8 +162,7 @@ class Boy:
         self.state_machine = StateMachine(
             self.IDLE,
             {
-                self.SLEEP : {space_down: self.IDLE},
-                self.IDLE : {space_down: self.IDLE, time_out: self.SLEEP, right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
+                self.IDLE : {space_down: self.IDLE, right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
                 self.RUN : {space_down: self.RUN, right_up: self.IDLE, left_up: self.IDLE, right_down: self.IDLE, left_down: self.IDLE}
             }
         )
