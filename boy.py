@@ -3,6 +3,7 @@ from sdl2 import SDL_KEYDOWN, SDLK_SPACE, SDLK_RIGHT, SDL_KEYUP, SDLK_LEFT
 
 import game_world
 import game_framework
+from autorun import AutoRun
 from ball import Ball
 from state_machine import StateMachine
 
@@ -162,11 +163,13 @@ class Boy:
         self.IDLE = Idle(self)
         self.SLEEP = Sleep(self)
         self.RUN = Run(self)
+        self.AUTO_RUN = AutoRun(self)
         self.state_machine = StateMachine(
-            self.IDLE,
+            self.AUTO_RUN,
             {
                 self.IDLE : {space_down: self.IDLE},
-                self.RUN : {space_down: self.RUN}
+                self.RUN : {space_down: self.RUN},
+                self.AUTO_RUN : {space_down: self.AUTO_RUN}
             }
         )
 
