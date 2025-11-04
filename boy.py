@@ -62,8 +62,7 @@ class Idle:
 
 
     def exit(self, e):
-        if space_down(e):
-            self.boy.fire_ball()
+        pass
 
 
     def do(self):
@@ -121,8 +120,7 @@ class Run:
             self.boy.dir = self.boy.face_dir = -1
 
     def exit(self, e):
-        if space_down(e):
-            self.boy.fire_ball()
+        pass
 
     def do(self):
         if int(self.boy.frame) == 4:
@@ -167,8 +165,8 @@ class Boy:
         self.state_machine = StateMachine(
             self.IDLE,
             {
-                self.IDLE : {space_down: self.IDLE, right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
-                self.RUN : {space_down: self.RUN, right_up: self.IDLE, left_up: self.IDLE, right_down: self.IDLE, left_down: self.IDLE}
+                self.IDLE : {space_down: self.IDLE},
+                self.RUN : {space_down: self.RUN}
             }
         )
 
@@ -184,7 +182,7 @@ class Boy:
 
     def draw(self):
         self.state_machine.draw()
-        self.font.draw(self.x - 60, self.y + 50, f'{get_time():.2f}', (255, 255, 0))
+        #self.font.draw(self.x - 60, self.y + 50, f'{get_time():.2f}', (255, 255, 0))
 
 
     def fire_ball(self):
