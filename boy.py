@@ -47,7 +47,7 @@ FRAMES_PER_SEC = FRAMES_PER_ACTION * ACTION_PER_TIME
 
 # 새 크기 : 181 x 167 (pixel) -> 543 x 501 (cm)
 # 새 속도 : 36km/h -> 10m/s -> 333.33 pixel/s
-
+# 날갯짓 속도 : 1.0 / 0.5 * 8 = 16 frame/s
 
 
 
