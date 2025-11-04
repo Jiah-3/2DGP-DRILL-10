@@ -1,5 +1,3 @@
-import math
-
 from pico2d import load_image, get_time, load_font
 from sdl2 import SDL_KEYDOWN, SDLK_SPACE, SDLK_RIGHT, SDL_KEYUP, SDLK_LEFT
 
@@ -34,7 +32,7 @@ def left_up(e):
 # Boy의 Run Speed 계산
 
 PIXEL_PER_METER = (10.0 / 0.3)
-RUN_SPEED_KMPH = 20.0
+RUN_SPEED_KMPH = 36.0
 RUN_SPEED_MPH = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPH / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -47,7 +45,8 @@ ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 8
 FRAMES_PER_SEC = FRAMES_PER_ACTION * ACTION_PER_TIME
 
-
+# 새 크기 : 181 x 167 (pixel) -> 543 x 501 (cm)
+# 새 속도 : 36km/h -> 10m/s -> 333.33 pixel/s
 
 
 
